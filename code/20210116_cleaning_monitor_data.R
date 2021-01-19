@@ -1,7 +1,7 @@
 #### Cleaning monitoring station data ####
 #### January 16, 2021 ####
 
-setwd("D:/Users/profu/Documents/Schoolwork/Postdoc/Research Projects/ozone_modeling")
+setwd("D:/Users/profu/Documents/Schoolwork/Postdoc/Research Projects/no2_model_mexico_city")
 options(mc.cores=parallel::detectCores())
 
 
@@ -202,3 +202,32 @@ long <- rename(long, date = FECHA)
 
 ## Export dataset
 #write.csv(long, "monitor_data_20210118.csv")
+
+
+
+#### Descriptive statistics of monitoring data ####
+setwd("D:/Users/profu/Documents/Schoolwork/Postdoc/Research Projects/no2_model_mexico_city/data/monitor_data")
+library(patchwork)
+
+dta <- read.csv("monitor_data_20210118.csv", header=TRUE, stringsAsFactors = FALSE)
+dta$date <- as.Date(dta$date, format="%m/%d/%Y")
+
+summary(dta)
+
+a <- ggplot(dta, aes(x=date, y=no)) +
+  geom_line() +
+  theme_bw() +
+  labs(y = expression("NO (ppb)"), x = "Date")
+
+b <- ggplot(dta, aes(x=date, y=no2)) +
+  geom_line() +
+  theme_bw() +
+  labs(y = expression("NO"[2]*" (ppb)"), x = "Date")
+
+c <- ggplot(dta, aes(x=date, y=ozone)) +
+  geom_line() +
+  theme_bw() +
+  labs(y = expression("O"[3]*" (ppb)"), x = "Date")
+
+
+a / b / c 
