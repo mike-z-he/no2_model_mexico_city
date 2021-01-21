@@ -22,9 +22,10 @@ library(stars)
 library(gdalUtils)
 library(data.table)
 library(remotes)
+library(fst)
 
 
-#### Load Functions ####
+#### make_grd_1km function ####
 make_grd_1km <- function(data_dir, force = FALSE, verbose = FALSE) {
   
   # Skip if exists
@@ -167,5 +168,8 @@ make_grd_1km <- function(data_dir, force = FALSE, verbose = FALSE) {
 
 
 
-#### 
-make_grd_1km(data_dir = here(), force = FORCE, verbose = VERBOSE)
+#### New function ####
+
+
+
+

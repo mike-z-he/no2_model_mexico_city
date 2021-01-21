@@ -205,8 +205,21 @@ long <- rename(long, date = FECHA)
 
 
 
+#### Adding coordinate information ####
+## This was obtained also from the RAMA website
+setwd("D:/Users/profu/Documents/Schoolwork/Postdoc/Research Projects/no2_model_mexico_city/data/monitor_data/RAMA")
+library(tidyverse)
+
+dta <- read.csv("monitor_data_20210118.csv", header=TRUE, stringsAsFactors = FALSE)
+dta$date <- as.Date(dta$date, format="%m/%d/%Y")
+
+coords <- read.csv("monitor_long_lat.csv", header=TRUE, stringsAsFactors = FALSE)
+
+dta2 <- left_join(dta, coords, by = "monitor")
+#write.csv(dta2, "monitor_data_20210119.csv")
+
 #### Descriptive statistics of monitoring data ####
-setwd("D:/Users/profu/Documents/Schoolwork/Postdoc/Research Projects/no2_model_mexico_city/data/monitor_data")
+setwd("D:/Users/profu/Documents/Schoolwork/Postdoc/Research Projects/no2_model_mexico_city/data/monitor_data/RAMA")
 library(patchwork)
 
 dta <- read.csv("monitor_data_20210118.csv", header=TRUE, stringsAsFactors = FALSE)
