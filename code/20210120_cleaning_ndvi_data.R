@@ -1,4 +1,4 @@
-#### Cleaning NASA Satellite Data ####
+#### Cleaning NASA NDVI Data ####
 #### January 20, 2021 ####
 
 ### Much of the code used here is adapted from Ian's scripts, reorganized and
