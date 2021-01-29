@@ -1,9 +1,6 @@
 #### Cleaning NASA NDVI Data ####
 #### January 20, 2021 ####
 
-### Much of the code used here is adapted from Ian's scripts, reorganized and
-### combined into files that aligns with my work flow
-
 setwd("D:/Users/profu/Documents/Schoolwork/Postdoc/Research Projects/no2_model_mexico_city/data/ndvi_1km")
 options(mc.cores=parallel::detectCores())
 
