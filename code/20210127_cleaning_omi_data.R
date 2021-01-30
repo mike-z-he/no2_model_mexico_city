@@ -1,5 +1,5 @@
 #### Cleaning NASA OMI Data ####
-#### January 20, 2021 ####
+#### January 27, 2021 ####
 
 setwd("D:/Users/profu/Documents/Schoolwork/Postdoc/Research Projects/no2_model_mexico_city/data/satellite_data/omi/3_OMNO2d")
 options(mc.cores=parallel::detectCores())
@@ -40,6 +40,7 @@ rm(paths, p)
 
 #### Opening a single file ####
 ## output a text file about the metadata
+nc <- nc_open('OMI-Aura_L3-OMNO2d_2010m0424_v003-2019m1121t234332.he5.SUB.nc4')
 {
   sink("OMI-Aura_L3-OMNO2d_2005m0101_v003-2019m1120t182907.he5.SUB_metadata.txt")
   print(nc)
@@ -104,3 +105,6 @@ for (i in  1:files.length){
     write.csv(nc.points.i, file = nm1 ,row.names = FALSE)
   }
 }
+
+
+#### Processing ozone data ####

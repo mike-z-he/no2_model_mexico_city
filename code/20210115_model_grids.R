@@ -158,3 +158,15 @@ cluster_grd_1km <- function(n = 50, force = FALSE, verbose = FALSE) {
 
 cluster_grd_1km(n=50, force = FALSE, verbose = TRUE)
 
+
+
+#### Creating a CSV grid of all dates/points ####
+setwd("D:/Users/profu/Documents/Schoolwork/Postdoc/Research Projects/no2_model_mexico_city/data/geo")
+options(mc.cores=parallel::detectCores())
+
+grid <- read.csv("grid.csv", stringsAsFactors = FALSE)
+
+dates <- as.data.frame(seq(as.Date("2005-01-01"), as.Date("2019-12-31"), by = 1))
+names(dates)[1] <- "date"
+
+grid_date <- merge(grid, dates)
