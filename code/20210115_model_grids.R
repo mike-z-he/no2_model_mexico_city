@@ -170,3 +170,4 @@ dates <- as.data.frame(seq(as.Date("2005-01-01"), as.Date("2019-12-31"), by = 1)
 names(dates)[1] <- "date"
 
 grid_date <- merge(grid, dates)
+write.csv(grid_date, "grids_complete.csv", row.names = FALSE)

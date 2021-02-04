@@ -105,6 +105,3 @@ for (i in  1:files.length){
     write.csv(nc.points.i, file = nm1 ,row.names = FALSE)
   }
 }
-
-
-#### Processing ozone data ####
