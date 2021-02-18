@@ -3,8 +3,8 @@ title: "Data Download Guide"
 author: "Mike He"
 date: "January 7, 2021"
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -145,7 +145,7 @@ There are many ways to download this dataset, but I utilized [NASA Earthdata Sea
 
 ![](data_download_guide_photos/17.png)
 
-Under **Granule Filters**, enter `8 6,7` for the MODIS Tiles SIN. This filters the grids to only include those relevant to Mexico City. Click **Download All**:
+Using the crop tool, select the area that you are interested in downloading (default is entire map):
 
 ![](data_download_guide_photos/18.png)
 
@@ -153,8 +153,21 @@ Similar to the GES DISC download, this will take you to a page where you can cli
 
 ------------------------------------------------------------------------
 
+## Elevation Data
+
+Elevation data is obtained from the Shuttle Radar Topography Mission (SRTM). The data can also be found and downloaded through Earthdata using the code SRTMGL1. A sample is shown below:
+
+![](data_download_guide_photos/19.png)
+
+------------------------------------------------------------------------
+
 ## Population Data
 
-Population count and density are obtained from the [Gridded Population of the World (GPW), v4](https://sedac.ciesin.columbia.edu/data/collection/gpw-v4/maps/services). This raster product provides \~1x1km grids of population for our area of interest, updated every 5 years from 2000 to 2020. This download was very straightforward, but the website was down at the time when I completed this document. I will add screenshots and instructions for download at a later time.
+Population count and density are obtained from the [Gridded Population of the World (GPW), v4](https://sedac.ciesin.columbia.edu/data/collection/gpw-v4/maps/services). This raster product provides \~1x1km grids of population for our area of interest, updated every 5 years from 2000 to 2020. On the home page, go to **Data Sets**, and click on the data that you are interested in downloading. For us here, it is the Population Count data:
+
+![](data_download_guide_photos/20.png)
+
+You are required to login to Earthdata before downloading any datasets. After logging in, fill in the required fields to download your dataset of interest, such as in the example below:\
+![](data_download_guide_photos/21.png)
 
 ------------------------------------------------------------------------
