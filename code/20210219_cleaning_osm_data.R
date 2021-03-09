@@ -29,8 +29,6 @@ library(maptools)
 library(sf)
 library(stars)
 library(units)
-#remotes::install_github("ITSLeeds/osmextract")
-library(osmextract)
 
 #### Load data and build query ####
 setwd("D:/Users/profu/Documents/Schoolwork/Postdoc/Research Projects/no2_model_mexico_city/data/geo")
@@ -122,7 +120,7 @@ masked_2 <- mask(rLength2, grids)
 #### U
 
 
-#### Using Michael's Code (Modified to skip PostGIS for now) ####
+#### Using Michael's Code (Modified to skip PostGIS) ####
 # Settings
 sinu_crs = structure(list(input = "unknown", wkt = 'PROJCRS["unknown",BASEGEOGCRS["unknown",DATUM["unknown",ELLIPSOID["unknown",6371007.181,0,LENGTHUNIT["metre",1,ID["EPSG",9001]]]],PRIMEM["Greenwich",0,ANGLEUNIT["degree",0.0174532925199433,ID["EPSG",9122]]]],CONVERSION["Sinusoidal",METHOD["Sinusoidal"],PARAMETER["Longitude of natural origin",0,ANGLEUNIT["degree",0.0174532925199433],ID["EPSG",8802]],PARAMETER["False easting",0,LENGTHUNIT["metre",1],ID["EPSG",8806]],PARAMETER["False northing",0,LENGTHUNIT["metre",1],ID["EPSG",8807]]],CS[Cartesian,2],AXIS["easting",east,ORDER[1],LENGTHUNIT["metre",1,ID["EPSG", 9001]]],AXIS["northing",north,ORDER[2],LENGTHUNIT["metre",1,ID["EPSG",9001]]]]'), class = "crs")
 
@@ -169,15 +167,28 @@ grid_pol$geometry.y <- NULL
 grid_pol <- st_sf(grid_pol, sf_column_name = "geometry.x") 
 
 dta <- data.frame(grid_pol$grd_1km_rst.tif.V2.x, grid_pol$grd_1km_rst.tif.V3.x, grid_pol$length_m, grid_pol$id)
-dta <- dta[!duplicated(dta$grid_pol.id),]
-dta$grid_pol.id <- NULL
+
+dta2 <- aggregate(x = dta$grid_pol.length_m, by = list(dta$grid_pol.id), FUN = sum) ## this aggregates by ID
+
+dta <- dta[!duplicated(dta$grid_pol.id),] ## remove to get the right number of grids
+
 dta <- dta %>%
   rename(x = grid_pol.grd_1km_rst.tif.V2.x,
          y = grid_pol.grd_1km_rst.tif.V3.x,
-         road_length = grid_pol.length_m
+         road_length = grid_pol.length_m,
+         id = grid_pol.id
   )
 
-dta2 <- st_as_sf(dta, coords = c("x", "y"))
+dta2 <- dta2 %>%
+  rename(id = Group.1,
+         road_length = x)
+
+dta$road_length <- NULL ## remove the row first to avoid double merge
+dta <- merge(dta, dta2, by = "id") ## merge the aggregated results
+
+dta$road_length = set_units(dta$road_length, "km")
+
+#dta3 <- st_as_sf(dta, coords = c("x", "y"))
 
 # Calculate density (this is likely unnecessary)
 #grid_pol$length_m[is.na(grid_pol$length_m)] = 0
@@ -196,3 +207,5 @@ dta2 <- st_as_sf(dta, coords = c("x", "y"))
 
 setwd("D:/Users/profu/Documents/Schoolwork/Postdoc/Research Projects/no2_model_mexico_city/data/open_street_map")
 write_csv(dta, "osm_grid_matched.csv")
+
+
